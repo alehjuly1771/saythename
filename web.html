@@ -1,0 +1,1012 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SAY THE NAME — Fanpage</title>
+
+  <style>
+    :root{
+      --accent:#222;
+      --muted:#888;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{
+      height:100%;
+      font-family:Inter, "Segoe UI", Roboto, Arial, sans-serif;
+      scroll-behavior:smooth;
+      color:var(--accent);
+      background:#ffffff;
+    }
+
+    .page-wrap{
+      width:100%;
+      background:#ffffff;
+      min-height:100vh;
+    }
+
+    /* HEADER */
+    .site-header{
+      background:#ffffff;
+      border-bottom:1px solid #efefef;
+      width:100%;
+    }
+
+    .header-inner{
+      width:100%;
+      padding:35px 55px;
+      display:flex;
+      justify-content: space-between;
+      align-items:center;
+      gap:25px;
+    }
+
+    .logo{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+
+    .logo img{
+      height:50px;
+    }
+
+    .logo-text{
+      font-weight:700; 
+      font-size:16px;
+      letter-spacing:1px;
+    }
+
+    .site-title{
+      flex:1;
+      text-align:left;
+      font-size:26px;
+      font-weight:800;
+      letter-spacing:3px;
+    }
+
+    .main-nav{
+      display:flex;
+      gap:20px;
+      align-items:center;
+    }
+
+    .main-nav .nav-btn{
+      display:inline-block;
+      padding:10px 18px;
+      border-radius:25px;
+      text-decoration:none;
+      color:var(--muted);
+      font-size:15px;
+      font-weight:500;
+    }
+
+    /* HERO */
+    .hero{width:100%;padding:40px 0;display:flex;justify-content:center;}
+    .hero-frame{width:90%;max-width:1300px;background:white;border:1px solid #eee;padding:6px;overflow:hidden;}
+    .hero-img{width:100%;height:auto;display:block;object-fit:cover;}
+
+    /* ABOUT */
+    #about{
+      max-width:1250px;
+      margin:80px auto;
+      padding:20px 40px;
+      display:flex;
+      gap:40px;
+      align-items:center;
+    }
+    #about .about-text{flex:1;line-height:1.7;font-size:15px;text-align:justify;}
+    #about .about-img{flex:1;}
+    #about .about-img img{width:100%;border-radius:10px;display:block;}
+
+    /* MEMBER SECTION */
+    #member{
+      max-width:1250px;
+      margin:80px auto;
+      padding:0 40px;
+    }
+
+    .member-title{
+      text-align:center;
+      font-size:22px;
+      font-weight:700;
+      margin-bottom:40px;
+      letter-spacing:1px;
+    }
+
+    .member-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:45px;
+    }
+
+    .member-card{
+      background:#ffffff;
+      border:1px solid #e5e5e5;
+      padding:18px 18px 25px;
+      text-align:center;
+      border-radius:6px;
+      cursor:pointer;
+    }
+
+    .member-card img{
+      width:100%;
+      aspect-ratio:1/1;
+      object-fit:cover;
+      object-position:center top;
+      border-radius:6px;
+      margin-bottom:12px;
+    }
+
+    /* POPUP GRID */
+    #popupOverlay{
+      position:fixed;
+      top:0; left:0;
+      width:100%; height:100vh;
+      background:rgba(0,0,0,0.85);
+      display:none;
+      justify-content:center;
+      align-items:flex-start;
+      padding-top:50px;
+      overflow-y:auto;
+      z-index:9999;
+    }
+
+    .popup-box{
+      background:white;
+      width:90%;
+      max-width:1100px;
+      padding:40px;
+      border-radius:10px;
+      position:relative;
+    }
+
+    .close-popup{
+      position:absolute;
+      top:20px;
+      right:25px;
+      font-size:40px;
+      color:#333;
+      cursor:pointer;
+    }
+
+    .popup-title{
+      text-align:center;
+      font-size:24px;
+      font-weight:700;
+      margin-bottom:35px;
+    }
+
+    .popup-member-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:35px;
+    }
+
+    .popup-card{
+      background:#fff;
+      border:1px solid #e6e6e6;
+      padding:18px;
+      text-align:center;
+      border-radius:6px;
+      cursor:pointer;
+    }
+
+    .popup-card img{
+    width:100%;
+    aspect-ratio:1/1;
+    object-fit:cover;
+    object-position:center 20%; /* fokus ke wajah */
+    border-radius:6px;
+    margin-bottom:12px;
+    }
+
+
+    /* DETAIL POPUP FIGMA */
+    #detailOverlay{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.85);
+      display:none;
+      justify-content:center;
+      align-items:center;
+      padding:40px 0;
+      overflow-y:auto;
+      z-index:100000;
+    }
+
+    .detail-box{
+      width:900px;
+      background:white;
+      border:2px solid #7A3E3E;
+      padding:40px 45px;
+      border-radius:4px;
+      position:relative;
+      display:flex;
+      gap:45px;
+    }
+
+    .detail-title{
+      position:absolute;
+      top:15px;
+      left:50%;
+      transform:translateX(-50%);
+      font-size:22px;
+      font-weight:800;
+    }
+
+    .detail-close{
+      position:absolute;
+      top:15px;
+      right:20px;
+      font-size:32px;
+      color:#7A3E3E;
+      cursor:pointer;
+    }
+
+    .detail-left img{
+      width:300px;
+      height:420px;
+      object-fit:cover;
+    }
+
+    .detail-right{
+      flex:1;
+      padding-top:20px;
+    }
+
+    .detail-alias{
+      font-size:15px;
+      font-weight:700;
+      margin-bottom:8px;
+    }
+
+    .detail-info{
+      font-size:13px;
+      line-height:1.6;
+      margin-bottom:30px;
+    }
+
+    .nav-buttons{
+      display:flex;
+      gap:10px;
+    }
+
+    .nav-buttons button{
+      padding:8px 14px;
+      background:#7A3E3E;
+      border:none;
+      color:white;
+      font-weight:700;
+      border-radius:4px;
+      cursor:pointer;
+    }
+
+    /* ALBUM SECTION */
+#album{
+  max-width:1250px;
+  margin:80px auto;
+  padding:0 40px;
+}
+
+.album-title{
+  font-size:22px;
+  font-weight:700;
+  text-align:left;
+  margin-bottom:35px;
+}
+
+.album-list{
+  display:flex;
+  flex-direction:column;
+  gap:25px;
+}
+
+.album-card{
+  background:white;
+  border:1px solid #e5e5e5;
+  border-radius:12px;
+  padding:20px;
+  display:flex;
+  align-items:center;
+  gap:25px;
+  box-shadow:0 4px 18px rgba(0,0,0,0.08);
+}
+
+.album-img{
+  width:160px;
+  height:160px;
+  border-radius:10px;
+  object-fit:cover;
+}
+
+.album-info{
+  flex:1;
+}
+
+.album-name{
+  font-size:18px;
+  font-weight:700;
+  margin-bottom:8px;
+}
+
+.album-desc{
+  font-size:14px;
+  line-height:1.6;
+  color:#ffffff;
+  margin-bottom:15px;
+  max-width:80%;
+}
+
+/* ALBUM POPUP */
+.album-overlay{
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100vh;
+  background:rgba(0,0,0,0.85);
+  display:none;
+  justify-content:center;
+  align-items:flex-start;
+  padding-top:40px;
+  overflow-y:auto;
+  z-index:999999;
+}
+
+.album-popup-box{
+  width:90%;
+  max-width:1100px;
+  background:white;
+  padding:35px 40px;
+  border-radius:8px;
+  position:relative;
+  border:1px solid #ddd;
+}
+
+.album-close{
+  position:absolute;
+  top:15px;
+  right:25px;
+  font-size:32px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.album-popup-title{
+  text-align:center;
+  font-size:24px;
+  font-weight:800;
+  margin-bottom:30px;
+  letter-spacing:1px;
+}
+
+.album-popup-list{
+  display:flex;
+  flex-direction:column;
+  gap:22px;
+}
+
+.album-popup-card{
+  background:#fff;
+  border:1px solid #e4e4e4;
+  border-radius:12px;
+  padding:20px;
+  display:flex;
+  gap:25px;
+  align-items:center;
+  box-shadow:0 2px 10px rgba(0,0,0,0.08);
+}
+
+.album-popup-img{
+  width:140px;
+  height:140px;
+  border-radius:10px;
+  object-fit:cover;
+}
+
+.album-popup-info h3{
+  font-size:18px;
+  font-weight:700;
+  margin-bottom:8px;
+}
+
+.album-popup-info p{
+  font-size:14px;
+  color:#666;
+  line-height:1.6;
+  max-width:85%;
+  margin-bottom:12px;
+}
+
+.album-popup-info button{
+  padding:8px 18px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  background:white;
+  cursor:pointer;
+  font-weight:600;
+}
+.album-popup-info button:hover{
+  background:#ffffff;
+}
+
+/* STREAMING */
+.stream-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:40px;
+}
+.stream-card{
+    position:relative;
+    cursor:pointer;
+    border-radius:10px;
+    overflow:hidden;
+    transition:0.2s;
+}
+.stream-card:hover{ transform:scale(1.02); }
+.stream-card img{
+    width:100%;
+    height:260px;
+    object-fit:cover;
+    display:block;
+}
+.stream-label{
+    position:absolute;
+    bottom:0;
+    left:0;
+    background:#e63946;
+    color:white;
+    padding:6px 14px;
+    font-size:13px;
+    font-weight:700;
+    border-top-right-radius:8px;
+}
+
+/* FOOTER */
+.center-footer{
+  text-align:center;
+  padding:25px 0;
+  font-size:14px;
+  color:#000000;
+}
+
+  </style>
+</head>
+
+<body>
+
+<div class="page-wrap">
+
+  <!-- MEMBER -->
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">
+        <img src="logo.jpeg" alt="">
+        <span class="site-title">SAY THE NAME</span>
+      </div>
+      <nav class="main-nav">
+        <a href="#about" class="nav-btn"><strong>About</strong></a>
+        <a href="#member" class="nav-btn"><strong>Member</strong></a>
+        <a href="#album" class="nav-btn"><strong>Album</strong></a>
+        <a href="#streaming" class="nav-btn"><strong>Streaming</strong></a>
+        <a href="#home" class="nav-btn"><strong>Home</strong></a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-frame">
+        <img src="homepg2.jpeg" class="hero-img">
+      </div>
+    </section>
+  </main>
+
+  <section id="about">
+    <div class="about-text">
+        <p><strong>SEVENTEEN</strong> adalah BoyBand besar dibawah naungan Pledis
+        Entertaiment. Dengan 13 anggota, 3 sub-unit yaitu Vocal, HipHop, dan Performances. 
+        Kemudian menerapkan sistem pre-debut, <strong>SEVENTEEN's</strong> pelatihan dan persiapan 
+        berhasil diperkenalkan ke publik dengan cara live broadcasts.</p>
+
+        <br>
+
+        <p>Memulai Debut pada <strong>26 Mei 2015</strong> dengan Mini Album <em>17 CARAT</em>. Suksesnya debut, 
+        mereka meninggalkan kesan kuat sebagai grup baru yang berbakat. Sejauh itu pula, mereka mencapai 
+        kesuksesan yang mendunia, mempengaruhi lewat promosi, penampilan, musik yang menjadi ciri khas, juga 
+        dikenal luas sebagai grup yang memproduksi lagu secara mandiri.</p>
+    </div>
+    <div class="about-img">
+      <img src="seventeen.jpeg">
+    </div>
+  </section>
+
+  <section id="member">
+    <h2 class="member-title">SEVENTEEN MEMBERS</h2>
+
+    <div class="member-grid">
+
+      <!-- MEMBER GRID -->
+      <div class="member-card"><img src="1CHOISEUNGCHEOL.jpeg"></div>
+      <div class="member-card"><img src="2YOONJEONGHAN.jpeg"></div>
+      <div class="member-card"><img src="3HONGJISOO.jpeg"></div>
+      <div class="member-card"><img src="4WENJUNHUI.jpeg"></div>
+      <div class="member-card"><img src="5KWONSOONYOUNG.jpeg"></div>
+      <div class="member-card"><img src="6JEONWONWOO.jpeg"></div>
+
+    </div>
+  </section>
+
+</div>
+
+<!-- POPUP GRID -->
+<div id="popupOverlay">
+  <div class="popup-box">
+    <span class="close-popup">&times;</span>
+    <h2 class="popup-title">SEVENTEEN MEMBERS</h2>
+
+    <div class="popup-member-grid">
+
+      <!-- 13 MEMBER -->
+      <div class="popup-card" data-index="0"><img src="1CHOISEUNGCHEOL.jpeg"></div>
+      <div class="popup-card" data-index="1"><img src="2YOONJEONGHAN.jpeg"></div>
+      <div class="popup-card" data-index="2"><img src="3HONGJISOO.jpeg"></div>
+      <div class="popup-card" data-index="3"><img src="4WENJUNHUI.jpeg"></div>
+      <div class="popup-card" data-index="4"><img src="5KWONSOONYOUNG.jpeg"></div>
+      <div class="popup-card" data-index="5"><img src="6JEONWONWOO.jpeg"></div>
+      <div class="popup-card" data-index="6"><img src="7LEEJIHOON.jpeg"></div>
+      <div class="popup-card" data-index="7"><img src="8MYUNGHO.jpeg"></div>
+      <div class="popup-card" data-index="8"><img src="9KIMMINGYU.jpeg"></div>
+      <div class="popup-card" data-index="9"><img src="10LEESEOKMIN.jpeg"></div>
+      <div class="popup-card" data-index="10"><img src="11BOOSEUNGKWAN.jpeg"></div>
+      <div class="popup-card" data-index="11"><img src="12CHWEHANSOL.jpeg"></div>
+      <div class="popup-card" data-index="12"><img src="13LEECHAN.jpeg"></div>
+
+    </div>
+  </div>
+</div>
+
+<!-- DETAIL POPUP -->
+<div id="detailOverlay">
+  <div class="detail-box">
+
+    <div class="detail-title" id="detailName">NAME HERE</div>
+    <span class="detail-close">&times;</span>
+
+    <div class="detail-left">
+      <img id="detailImg" src="">
+    </div>
+
+    <div class="detail-right">
+      <div class="detail-alias" id="detailAlias"></div>
+      <div class="detail-info" id="detailInfo"></div>
+
+      <div class="nav-buttons">
+        <button id="btnBack">BACK</button>
+        <button id="btnNext">NEXT</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ALBUM -->
+<section id="album">
+  <h2 class="album-title">ALBUM</h2>
+
+  <div class="album-list">
+
+    <!-- Item 1 -->
+    <div class="album-card">
+      <img src="1.jpg" class="album-img">
+      <div class="album-info">
+        <h3 class="album-name">SEVENTEEN 5th Album 'HAPPY BURSTDAY</h3>
+      </div>
+    </div>
+
+    <!-- Item 2 -->
+    <div class="album-card">
+      <img src="2.jpg" class="album-img">
+      <div class="album-info">
+        <h3 class="album-name">SEVENTEEN 11th Mini Album 'SEVENTEENTH HEAVEN</h3>
+      </div>
+    </div>
+
+    <!-- Item 3 -->
+    <div class="album-card">
+      <img src="3.jpg" class="album-img">
+      <div class="album-info">
+        <h3 class="album-name">ALWAYS YOURS</h3>
+      </div>
+    </div>
+
+    <!-- ALBUM POPUP -->
+<div id="albumOverlay" class="album-overlay">
+  <div class="album-popup-box">
+
+    <span class="album-close">&times;</span>
+    <h2 class="album-popup-title">ALBUM</h2>
+
+    <div class="album-popup-list">
+
+      <div class="album-popup-card">
+        <img src="1.jpg" class="album-popup-img">
+        <div class="album-popup-info">
+          <h3>SEVENTEEN 5th Album 'HAPPY BURSTDAY'</h3>
+          <p>
+            The Album includes sixteen songs, including its lead single, "THUNDER", and a solo song from each of the members 
+            of SEVENTEEN. Among the songs are sollaboration with American record producers Pharrel Williams and Timbalad.
+          </p>
+        </div>
+      </div>
+
+      <div class="album-popup-card">
+        <img src="12.jpg" class="album-popup-img">
+        <div class="album-popup-info">
+          <h3>SEVENTEEN 10th Mini Album 'FML'</h3>
+          <p>
+            Prior to release, FML became the second most-preordered album in South Korean history, with 4.64 million preorders. 
+            Pledis and album distributor YG Plus, combined sales of all versions of FML surpassed 6.2 million copies in July 2023, 
+            marking a first for an album by a K-pop artist. It won Album of the Year at the 2023 MAMA Awards.
+          </p>
+        </div>
+      </div>
+
+      <div class="album-popup-card">
+        <img src="2.jpg" class="album-popup-img">
+        <div class="album-popup-info">
+          <h3>SEVENTEEN 11th Mini Album 'SEVENTEENTH HEAVEN'</h3>
+          <p>
+           Produced by Woozi and Bumzu, the eight-track EP is a primally upbeat record, serving as a celebration of the band's 
+           career thus far. It is led by the single "GOD OF MUSIC", and includes a collaboration with the American producer 
+           Marshmello title "SOS"
+          </p>
+        </div>
+      </div>
+
+      <div class="album-popup-card">
+        <img src="3.jpg" class="album-popup-img">
+        <div class="album-popup-info">
+          <h3>ALWAYS YOURS</h3>
+          <p>
+            The album features all the group's Japanesesongs from 2018-2023, alongside two new tracks, which include the lead 
+            single "IMA-EVEN IF THE WORLD ENDS TOMORROW". Upon release, the album charted at number one on Japan's Oricon and 
+            Billboard weekly charts, as well as at number five on both of their year-end charts.
+          </p>
+        </div>
+      </div>
+
+      <div class="album-popup-card">
+        <img src="4.jpg" class="album-popup-img">
+        <div class="album-popup-info">
+          <h3>SEVENTEEN 4th Album Repackage 'SECTOR 17'</h3>
+          <p>
+            It was released on October 14, 2024, by Pledis Entertainment through YG Plus. The EP's lead single, 
+            "Love, Money, Fame", was released on the same day and features American music producer DJ Khaled. 
+            Both the album and its lead single topped South Korea's respective Circle Charts.
+          </p>
+        </div>
+      </div>
+
+      <div class="album-popup-card">
+        <img src="5.jpg" class="album-popup-img">
+        <div class="album-popup-info">
+          <h3>SEVENTEEN 4th Album 'Face the Sun</h3>
+          <p>
+            The album contains nine tracks, with "Hot" serving as lead single. The first track, 
+            "Darl+ing", was pre-released on April 15, 2022. The repackaged version of the album, 
+            titled Sector 17, released on July 18 alongside its lead single "World". The fourth track, 
+            "Cheers", was pre-released on July 7, 2022.
+          </p>
+        </div>
+      </div>
+
+      <div class="album-popup-card">
+        <img src="6.jpg" class="album-popup-img">
+        <div class="album-popup-info">
+          <h3>Attaca: 9th Mini Album</h3>
+          <p>
+            Attacca is the tenth Korean extended play (EP) and twelfth overall by the South Korean boy 
+            band Seventeen released on October 22, 2021 by Pledis Entertainment. The EP contains seven tracks, 
+            which include the lead single "Rock with You".
+          </p>
+        </div>
+      </div>
+
+      <div class="album-popup-card">
+        <img src="7.jpg" class="album-popup-img">
+        <div class="album-popup-info">
+          <h3>An Ode</h3>
+          <p>
+            The album spawned two singles, "Hit" was released as the album's lead single on August 5, 2019, 
+            followed by the title track, "Fear", on the release date of the album. An Ode was a commercial success, 
+            debuted atop the South Korean Gaon Album Chart, and topped the Japanese Oricon Albums Chart in its 
+            third week. It also reached number seven on the US Billboard World Albums chart. An Ode sold 822,265 
+            copies in South Korea in September 2019.
+          </p>
+        </div>
+      </div>
+
+      <div class="album-popup-card">
+        <img src="8.jpg" class="album-popup-img">
+        <div class="album-popup-info">
+          <h3>TEEN, AGE</h3>
+          <p>
+            It was released on November 6, 2017 by Pledis Entertainment with the lead single "Clap". 
+            Teen, Age was the group's second number one on the Billboard World Album Charts. The album was 
+            later repackaged as Seventeen's first special album entitled Director's Cut on February 5, 2018, 
+            with the title track "Thanks".
+          </p>
+        </div>
+      </div>
+
+      <div class="album-popup-card">
+        <img src="9.jpg" class="album-popup-img">
+        <div class="album-popup-info">
+          <h3>Going Seventeen</h3>
+          <p>
+            Going Seventeen is the third extended play from South Korean boy band Seventeen. 
+            It was released on December 5, 2016, by Pledis Entertainment. The album consists of eight tracks, 
+            including the title track, "Boom Boom".
+          </p>
+        </div>
+      </div>
+
+      <div class="album-popup-card">
+        <img src="10.jpg" class="album-popup-img">
+        <div class="album-popup-info">
+          <h3>Love & Letter (Repackage)</h3>
+          <p>
+            Love & Letter, also known as First 'Love & Letter', is the debut studio album by South Korean 
+            boy group Seventeen. It was released on April 25, 2016 through Pledis Entertainment. The album is a 
+            follow-up to the group's first two EPs, 17 Carat and Boys Be.
+          </p>
+        </div>
+      </div>
+
+      <div class="album-popup-card">
+        <img src="11.jpg" class="album-popup-img">
+        <div class="album-popup-info">
+          <h3>FIRST LOVE & LETTER</h3>
+          <p>
+            Love & Letter, also known as First 'Love & Letter', is the debut studio album by South Korean 
+            boy group Seventeen. It was released on April 25, 2016 through Pledis Entertainment. The album is 
+            a follow-up to the group's first two EPs, 17 Carat and Boys Be.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="stream-grid">
+
+    <!-- VIDEO 1 -->
+    <div class="stream-card"
+         onclick="window.open('https://youtu.be/sEeXBvk_t8Y?si=CqUlES2DnxikQs3u')">
+      <img src="fallenhoshi.jpeg">
+    </div>
+
+    <!-- VIDEO 2 -->
+    <div class="stream-card"
+         onclick="window.open('https://youtu.be/u89aNeJlyg0?si=0m1qsiChS-54b5vq')">
+      <img src="prettywoman.jpeg">
+    </div>
+
+    <!-- VIDEO 3 -->
+    <div class="stream-card"
+         onclick="window.open('https://youtu.be/pS57UX6s-xw?si=ezPc6H_37_c3DTNB')">
+      <img src="thunder.jpeg">
+    </div>
+
+    <!-- VIDEO 4 -->
+    <div class="stream-card"
+         onclick="window.open('https://music.youtube.com/watch?v=TL6b6uvxFJA&si=nCaxsoGryT6H_qY1')">
+      <img src="HOWO.jpeg">
+    </div>
+
+  </div>
+</section>
+
+<footer class="center-footer">
+    © <span id="year"></span> ALL RIGHT RESERVED
+</footer>
+
+<script>
+document.getElementById("year").textContent = new Date().getFullYear();
+
+/* DATA MEMBER (FORMAL + NONFORMAL) */
+
+const members = [
+  {
+    name: "CHOI SEUNGCHEOL",
+    alias: "S.COUPS",
+    formal: "1CHOISEUNGCHEOL.jpeg",
+    nonformal: "1sc1.jpeg",
+    info: `8 Agustus 1995, Daegu<br>General Leader<br>HipHop Team Leader`
+  },
+  {
+    name: "YOON JEONGHAN",
+    alias: "JEONGHAN",
+    formal: "2YOONJEONGHAN.jpeg",
+    nonformal: "2jh.jpeg",
+    info: `4 Oktober 1995, Seoul<br>Vocal Team`
+  },
+  {
+    name: "HONG JISOO",
+    alias: "JOSHUA",
+    formal: "3HONGJISOO.jpeg",
+    nonformal: "3js.jpeg",
+    info: `30 Desember 1995, Los Angeles<br>Vocal Team`
+  },
+  {
+    name: "WEN JUNHUI",
+    alias: "JUN",
+    formal: "4WENJUNHUI.jpeg",
+    nonformal: "4jn.jpeg",
+    info: `10 Juni 1996, Guangdong<br>Performance Team`
+  },
+  {
+    name: "KWON SOONYOUNG",
+    alias: "HOSHI",
+    formal: "5KWONSOONYOUNG.jpeg",
+    nonformal: "5sy.jpeg",
+    info: `15 Juni 1996, Namyangju<br>Performance Team Leader`
+  },
+  {
+    name: "JEON WONWOO",
+    alias: "WONWOO",
+    formal: "6JEONWONWOO.jpeg",
+    nonformal: "6ww.jpeg",
+    info: `17 Juli 1996, Changwon<br>HipHop Team`
+  },
+  {
+    name: "LEE JIHOON",
+    alias: "WOOZI",
+    formal: "7LEEJIHOON.jpeg",
+    nonformal: "7wz.jpeg",
+    info: `22 November 1996, Busan<br>Vocal Team Leader`
+  },
+  {
+    name: "SEO MYUNGHO",
+    alias: "THE8",
+    formal: "8MYUNGHO.jpeg",
+    nonformal: "8my.jpeg",
+    info: `7 November 1997, Liaoning<br>Performance Team`
+  },
+  {
+    name: "KIM MINGYU",
+    alias: "MINGYU",
+    formal: "9KIMMINGYU.jpeg",
+    nonformal: "9mg.jpeg",
+    info: `6 April 1997, Anyang<br>HipHop Team`
+  },
+  {
+    name: "LEE SEOKMIN",
+    alias: "DK",
+    formal: "10LEESEOKMIN.jpeg",
+    nonformal: "10dk.jpeg",
+    info: `18 Februari 1997, Suwon<br>Vocal Team`
+  },
+  {
+    name: "BOO SEUNGKWAN",
+    alias: "SEUNGKWAN",
+    formal: "11BOOSEUNGKWAN.jpeg",
+    nonformal: "11sk.jpeg",
+    info: `16 Januari 1998, Jeju<br>Vocal Team`
+  },
+  {
+    name: "CHWE HANSOL",
+    alias: "VERNON",
+    formal: "12CHWEHANSOL.jpeg",
+    nonformal: "12vn.jpeg",
+    info: `8 Februari 1998, New York<br>HipHop Team`
+  },
+  {
+    name: "LEE CHAN",
+    alias: "DINO",
+    formal: "13LEECHAN.jpeg",
+    nonformal: "13dn.jpeg",
+    info: `11 Februari 1999, Iksan<br>Performance Team`
+  }
+];
+
+
+/* ELEMENT */
+const popupOverlay = document.getElementById("popupOverlay");
+const detailOverlay = document.getElementById("detailOverlay");
+
+const detailImg = document.getElementById("detailImg");
+const detailName = document.getElementById("detailName");
+const detailAlias = document.getElementById("detailAlias");
+const detailInfo = document.getElementById("detailInfo");
+
+const closePopup = document.querySelector(".close-popup");
+const closeDetail = document.querySelector(".detail-close");
+
+let currentIndex = 0;
+let showingFormal = true;
+
+/* BUKA POPUP GRID */
+
+document.querySelectorAll(".member-card img").forEach(img=>{
+  img.addEventListener("click", ()=>{
+    popupOverlay.style.display="flex";
+  });
+});
+
+closePopup.onclick = ()=> popupOverlay.style.display="none";
+
+/* BUKA DETAIL */
+
+document.querySelectorAll(".popup-card").forEach(card=>{
+  card.addEventListener("click", ()=>{
+    popupOverlay.style.display="none";
+
+    currentIndex = Number(card.dataset.index);
+    showingFormal = true;
+
+    openDetail();
+  });
+});
+
+function openDetail(){
+  const m = members[currentIndex];
+
+  detailName.textContent = m.name;
+  detailAlias.textContent = m.alias;
+  detailInfo.innerHTML = m.info;
+
+  detailImg.src = showingFormal ? m.formal : m.nonformal;
+
+  detailOverlay.style.display="flex";
+}
+
+/* NEXT PHOTO (formal <-> nf)*/
+document.getElementById("btnNext").onclick = ()=>{
+  showingFormal = !showingFormal;
+  openDetail();
+};
+
+/* BACK → kembali ke popup grid */
+document.getElementById("btnBack").onclick = ()=>{
+  detailOverlay.style.display="none";
+  popupOverlay.style.display="flex";
+};
+
+/* CLOSE DETAIL */
+closeDetail.onclick = ()=> detailOverlay.style.display="none";
+
+detailOverlay.addEventListener("click",(e)=>{
+  if(e.target===detailOverlay) detailOverlay.style.display="none";
+});
+
+//  ALBUM POPUP
+const albumOverlay = document.getElementById("albumOverlay");
+const albumClose = document.querySelector(".album-close");
+
+// buka popup saat klik album-card
+document.querySelectorAll(".album-card").forEach(card => {
+  card.addEventListener("click", () => {
+    albumOverlay.style.display = "flex";
+  });
+});
+
+// tombol close
+albumClose.addEventListener("click", () => {
+  albumOverlay.style.display = "none";
+});
+
+// klik area gelap -> close
+albumOverlay.addEventListener("click", (e) => {
+  if(e.target === albumOverlay){
+    albumOverlay.style.display = "none";
+  }
+});
+
+</script>
+
+</body>
+</html>
