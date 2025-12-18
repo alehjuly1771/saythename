@@ -193,6 +193,63 @@
     transition: opacity .4s ease !important;
 }
 
+/* ======================
+   FAN LETTER DESIGN
+====================== */
+#fan-letter {
+  margin-top: 30px;
+}
+
+.fan-box {
+  max-width: 700px;
+  margin: 0 auto;
+  background: #f6e1df;
+  padding: 30px;
+  border-radius: 6px;
+}
+
+.fan-box input,
+.fan-box textarea {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 18px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-family: inherit;
+}
+
+.fan-box textarea {
+  height: 140px;
+  resize: none;
+}
+
+.send-btn {
+  float: right;
+  padding: 10px 30px;
+  border: none;
+  border-radius: 20px;
+  background: #ffffff;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.send-btn:hover {
+  background: #e8e8e8;
+}
+
+/* HASIL KOMENTAR */
+#fanResult {
+  max-width: 700px;
+  margin: 20px auto 0;
+}
+
+.fan-comment {
+  background: #fff;
+  border-left: 5px solid #6b2118;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+}
 
 
   </style>
@@ -351,6 +408,25 @@
 
     </div>
   </div>
+
+  <!-- ======================
+     FAN LETTER / COMMENT
+====================== -->
+<div class="section-box" id="fan-letter">
+  <h2 class="section-title" style="text-align:center;">FAN LETTER</h2>
+
+  <form id="fanForm" class="fan-box">
+    <input type="text" id="fanName" placeholder="Name :" required>
+    <input type="email" id="fanEmail" placeholder="Email :" required>
+    <textarea id="fanMessage" placeholder="Notes :" required></textarea>
+
+    <button type="submit" class="send-btn">Send</button>
+  </form>
+
+  <!-- hasil komentar -->
+  <div id="fanResult"></div>
+</div>
+
 
 <script>
 
@@ -634,6 +710,33 @@ function closeAlbumDetail(){
   document.getElementById("albumDetailPopup").style.display = "none";
   document.getElementById("albumDetailPopup").setAttribute("aria-hidden","true");
 }
+
+/* ======================
+   FAN LETTER FUNCTION
+====================== */
+const fanForm = document.getElementById("fanForm");
+const fanResult = document.getElementById("fanResult");
+
+fanForm.addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  const name = document.getElementById("fanName").value;
+  const email = document.getElementById("fanEmail").value;
+  const message = document.getElementById("fanMessage").value;
+
+  const commentBox = document.createElement("div");
+  commentBox.classList.add("fan-comment");
+
+  commentBox.innerHTML = `
+    <strong>${name}</strong> <br>
+    <small>${email}</small>
+    <p>${message}</p>
+  `;
+
+  fanResult.prepend(commentBox); // komentar terbaru di atas
+  fanForm.reset();               // kosongkan form
+});
+
 
 </script>
 
